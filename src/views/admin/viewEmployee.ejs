@@ -1,0 +1,49 @@
+<%- include("../partials/header.ejs") %>
+<link rel="stylesheet" href="../public/styles1.css">
+<link rel="stylesheet" href="../public/bootstrap.min.css">
+<div style="background-image: linear-gradient(45deg,#334d50,#cbcaa5); min-height:100vh;">
+  <div class="container-fluid">
+    <div class="card">
+      <div class="card-header">
+        <h2>View Employee <a class="btn btn-primary float-right m-2" href="/medapp-expense-admin/dashboard">Back to Dashboard</a> <a class="btn btn-primary float-right m-2" href="/medapp-expense-admin/logout">Logout</a></h2>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+        <table class="table table-hover">
+          <thead>
+            <tr class="table-primary">
+              <th scope="col">Employee Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Designation</th>
+              <th scope="col">Department</th>
+              <th scope="col">Avatar</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(employees.length > 0) { %>
+              <% employees.forEach((employee) => { %>
+                <tr>
+                  <td><%= employee.name %></td>
+                  <td><%= employee.email %></td>
+                  <td><%= employee.designation || "Nil" %></td>
+                  <td><%= employee.department || "Nil" %></td>
+                  <td><a href="/medapp-expense-admin/employee/avatar?emp=<%= employee._id %>"><img src="/medapp-expense-admin/employee/avatar?emp=<%= employee._id %>" style="width: 100px"></a></td>
+                </tr>
+              <% }) %>
+            <% } else if(employee) { %>
+                <tr>
+                  <td><%= employee.name %></td>
+                  <td><%= employee.email %></td>
+                  <td><%= employee.designation || "Nil" %></td>
+                  <td><%= employee.department || "Nil" %></td>
+                  <td><a href="/medapp-expense-admin/employee/avatar?emp=<%= employee._id %>"><img src="/medapp-expense-admin/employee/avatar?emp=<%= employee._id%>" style="width: 100px"></a></td>
+                </tr>
+              <% } %>
+          </tbody>
+        </table>
+      </div>
+      </div>
+    </div>
+  </div>
+  </div>
+<%- include("../partials/footer.ejs") %>

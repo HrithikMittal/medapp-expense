@@ -1,0 +1,28 @@
+{
+  "name": "medapp-expense-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon src/app.js",
+    "start": "node src/app.js"
+  },
+  "author": "Deepak Sharma",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^3.0.5",
+    "connect-flash": "^0.1.1",
+    "connect-mongo": "^2.0.3",
+    "ejs": "^2.6.1",
+    "express": "^4.16.4",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.15.6",
+    "express-validator": "^5.3.1",
+    "helmet": "^3.16.0",
+    "moment": "^2.24.0",
+    "mongoose": "^5.4.22",
+    "multer": "^1.4.1",
+    "nodemon": "^1.18.11",
+    "sharp": "^0.22.0"
+  }
+}

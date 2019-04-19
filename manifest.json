@@ -1,0 +1,14 @@
+{
+  "name": "Medapp Expense Mangement",
+  "short_name": "Medapp Expense",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff",
+  "description": "Employees expense management for medapp.in",
+  "icons": [
+    {
+      "src": "/logo.png",
+      "type": "image/png"
+    }
+  ]
+}

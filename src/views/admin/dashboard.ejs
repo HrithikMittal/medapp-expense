@@ -1,0 +1,164 @@
+<%- include("../partials/header.ejs") %>
+<link rel="stylesheet" href="../public/styles1.css">
+<link rel="stylesheet" href="../public/bootstrap.min.css">
+<div style="background-image: linear-gradient(45deg,#334d50,#cbcaa5); min-height:100vh;">
+	<div class="container-fluid">
+		<div class="container">
+			<h2 class="display-4 text-center">Admin Dashboard
+				<a class="btn btn-primary float-right mt-4" href="/medapp-expense-admin/employee">View all employee</a>
+				<a class="btn btn-primary float-right mt-4" href="/medapp-expense-admin/logout">Logout</a>
+			</h2>
+			<form action="/medapp-expense-admin/dashboard" class="mt-5" method="get" novalidate>
+		        <div class="form-group">
+		          <label for="option" class="text-white mb-3" style="font-size:25px;">View By</label>
+		          <select class="form-control" name="option" value="<%= viewBy %>" id="viewBy" required>
+		            <option value="" <% if(!viewBy) { %>selected<% } %> disabled>Choose</option>
+		            <option class="text-primary" value="month" <% if(viewBy === "month") { %>selected <% } %>>Month</option>
+		            <option class="text-primary" value="year" <% if(viewBy === "year") { %>selected <% } %>>Year</option>
+		          </select>
+		        </div>
+		        <div class="form-group hide" id="month" style="display: none">
+		          <label for="month" class="text-white mb-3" style="font-size:25px;">Month</label>
+		          <select class="form-control clear-select" name="month" required>
+		            <option value="" <% if(!month) { %>selected<% } %> disabled>Choose</option>
+		            <% let i = 1 %>
+		            <% monthArray.forEach((m) => {%>
+		              <option class="text-primary" value="<%= i %>" <% if(month === i) { %>selected <% } %>><%= m %></option>
+		            <% ++i }) %>
+		          </select>
+		        </div>
+		        <div class="form-group hide" id="year" style="display: none">
+		          <label for="year" class="text-white mb-3" style="font-size:25px;">Year</label>
+		          <select class="form-control clear-select" name="year" required>
+		            <option value="" <% if(!year) { %>selected<% } %> disabled>Choose</option>
+		            <% yearArray.forEach((y) => { %>
+		              <option class="text-primary" value="<%= y %>" <% if(year === y) { %>selected <% } %>><%= y %></option>
+		            <% }) %>
+		          </select>
+		        </div>
+		        <button type="submit" class="btn btn-primary hide mt-4" id="search" style="display: none">Search</button>
+      		</form>
+		</div>
+		<% if(expenses.length > 0 && viewBy) { let totalAmount = 0 %>
+		    <div class="card m-3">
+		        <div class="card-header">
+		          <% if(viewBy === "month") { %>
+		            Expenses of <%= monthName %> <%= year %>
+		          <% } else if(viewBy === "year") { %>
+		            Expenses of year <%= year %>
+		          <% } %>
+		        </div>
+		        <div class="card-body">
+							<div class="table-responsive">
+		          <table class="table table-striped">
+		            <thead>
+		              	<tr>
+							<th scope="col">Expense Type</th>
+							<th scope="col">Amount</th>
+							<th scope="col">Mode of Travel</th>
+							<th scope="col">From</th>
+							<th scope="col">To</th>
+							<th scope="col">Details</th>
+							<th scope="col">Date</th>
+							<th scope="col">Bill Image</th>
+							<th scope="col">Employee</th>
+							<th scope="col">Status</th>
+							<th scope="col">Change Status</th>
+						</tr>
+		            </thead>
+		            <tbody>
+		                <% if(expenses) { %>
+							<% expenses.forEach((expense) => { totalAmount += expense.amount %>
+								<tr>
+									<td><%= expense.expenseType %></td>
+									<td><%= expense.amount %></td>
+									<td><%= expense.mode || "Nil" %></td>
+									<td><%= expense.from || "Nil" %></td>
+									<td><%= expense.to || "Nil" %></td>
+									<td><%= expense.detail %></td>
+									<td><%= expense.createdAt.toDateString() %></td>
+									<td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
+									<td><a href="/medapp-expense-admin/employee?emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary">View Employee</a></td>
+									<td>
+										<% if(expense.status === true) { %>
+											Approved
+										<% } else { %>
+											Pending
+										<% } %>
+									</td>
+									<td>
+										<% if(expense.status === true) { %>
+											<a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=inactive" class="btn btn-sm btn-outline-secondary">Disapprove</a>
+										<% } else { %>
+											<a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=active" class="btn btn-sm btn-outline-secondary">Approve</a>
+										<% } %>
+									</td>
+								</tr>
+							<% }) %>
+						<% } %>
+		            </tbody>
+		          </table>
+							</div>
+		        </div>
+		        <div class="card-footer">
+		          <p class="float-right">Total Amount: <%= totalAmount %></p>
+		        </div>
+		      </div>
+		    <% } else if(!viewBy){ %>
+		      <div class="jumbotron text-muted text-center mt-5">
+		        <h4>Select an option</h4>
+		      </div>
+		    <% } else { %>
+		      <div class="jumbotron text-muted text-center mt-5">
+		        <h4>No Expenses for this month/year.</h4>
+		      </div>
+		    <% } %>
+		</div>
+</div>
+<script>
+    const $viewBy = document.querySelector("#viewBy")
+    const $month = document.querySelector("#month")
+    const $year = document.querySelector("#year")
+    const $search = document.querySelector("#search")
+    const $hide_all = document.querySelectorAll(".hide")
+    const $clear_all = document.querySelectorAll(".clear-select")
+    const preViewBy = <% if(!viewBy) { %>null<% }else { %>"<%= viewBy %>"<% } %>
+
+    function hide_all_selects(elements) {
+      for ( const element of elements) {
+        element.style.display = "none"
+      }
+    }
+
+    function clear_all_selects (selects) {
+      for (const select of selects) {
+        for(const option of select.options) {
+          option.selected = false
+        }
+        select.options[0].selected = true
+      }
+    }
+
+    function hide_specific_select(viewBy) {
+      if(viewBy === "month") {
+        hide_all_selects($hide_all)
+        $month.style.display = "block"
+        $year.style.display = "block"
+        $search.style.display = "block"
+      } else if(viewBy === "year") {
+        hide_all_selects($hide_all)
+        $year.style.display = "block"
+        $search.style.display = "block"
+      }
+    }
+
+    if($viewBy.value == preViewBy) {
+      hide_specific_select($viewBy.value)
+    }
+
+    $viewBy.addEventListener("change", (e) => {
+      hide_specific_select(e.target.value)
+      clear_all_selects($clear_all)
+    })
+</script>
+<%- include("../partials/footer.ejs") %>
