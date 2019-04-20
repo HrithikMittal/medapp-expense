@@ -7,8 +7,14 @@
   "description": "Employees expense management for medapp.in",
   "icons": [
     {
-      "src": "/logo.png",
-      "type": "image/png"
+      "src": "../public/logo-192.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "../public/logo-512.png",
+      "type": "image/png",
+      "sizes": "512x512"
     }
   ]
 }
