@@ -4,6 +4,7 @@ const express = require("express")
 const helmet = require("helmet")
 const db = require("./db/mongoose.js")
 const session = require("express-session")
+const MongoStore = require("connect-mongo")(session)
 const employeeRoute = require("./routes/employeeRoute")
 const adminRoute = require("./routes/adminRoute")
 
@@ -37,7 +38,10 @@ app.use(session({
   cookie: {
   	httpOnly: true,
   	expires: new Date(Date.now() + 60 * 60 * 1000)
-  }
+  },
+  store: new MongoStore({
+    mongooseConnection: db
+  })
 }));
 
 app.use((req, res, next) => {
