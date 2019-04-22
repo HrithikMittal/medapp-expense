@@ -277,6 +277,7 @@ router.get("/expenses/viewBy", isEmployeeLoggedIn, async (req, res) => {
 			}
 
 			let expenses = await Expense.find({
+				employee: req.session.employee,
 				$expr: expression
 			})
 
