@@ -103,7 +103,7 @@ router.post("/register", isEmployeeLoggedOut, [
 			const errors = validationResult(req)
 
 			if(!errors.isEmpty()) {
-				res.render("./employee/register", {
+				return res.render("./employee/register", {
 					pageTitle: title.employeeRegister,
 					name,
 					email,
