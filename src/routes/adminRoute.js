@@ -23,7 +23,7 @@ router.get("/login", isAdminLoggedOut, (req, res) => {
 })
 
 router.post("/login", isAdminLoggedOut, [
-		check("email").not().isEmpty().withMessage("Please provide email.").isEmail().withMessage("Invalid email address.").trim().escape(),
+		check("email").not().isEmpty().withMessage("Please provide Admin ID.").trim().escape(),
 		check("password").not().isEmpty().withMessage("Please provide password.").trim().escape()
 	], async (req, res) => {
 		try {
