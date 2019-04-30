@@ -378,7 +378,7 @@ router.post("/expenses/add", isEmployeeLoggedIn, uploadBill.single("billImage"),
 		check("amount").not().isEmpty().withMessage("Please enter the amount").custom((value, { req }) => Number(value)).withMessage("Invalid amount!"),
 		check("mode").custom((value, { req }) => {
 			if(req.body.expenseType === "travel") {
-				if(req.body.mode && ["car", "bus", "flight", "train", "cab", "other"].includes(req.body.mode)) {
+				if(req.body.mode && ["car", "bus", "flight", "train", "cab", ,"mo-bike", "other"].includes(req.body.mode)) {
 					return true
 				}else {
 					throw new Error("Please select a mode of travel!")
