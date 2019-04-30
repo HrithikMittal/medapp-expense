@@ -1,0 +1,24 @@
+<%- include("../partials/header.ejs") %>
+  <div class="box1">
+     <div class="wrapper animated bounceInDown">
+       <div class="company-info title-container">
+             <h1 class="title-container__title">Medapp.in</h1>
+             <h3 class="title-container__subtitle">Touching life, changing life, and saving lives.</h3>
+           </div>
+               <form class="form-container" action="/medapp-expense-admin/login" method="post">
+                <h1 align="center" style="color: White;">Admin Login</h1>
+                <div align="center" class="mt-3">
+                <input type="text" name="email" placeholder="Enter Admin Id" value="<%= email %>"  class="mt-5" required>
+                <input type="password" name="password" value="" placeholder="Enter Password..." class="mt-4">
+                </div>
+                <div align="center" class="mt-3">
+                 <button type="submit" name="button" class="mt-3 w-50">Login</button>
+                </div>
+                <div align="center" class="mt-3">
+                  <a class="mt-2 w-50 text-center" href="/">Home</a>
+                </div>
+               </form>
+           </div>
+      </div>
+  </div>
+<%- include("../partials/footer.ejs") %>
