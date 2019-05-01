@@ -73,7 +73,7 @@
                     <td><%= expense.detail %></td>
                     <td><%= expense.createdAt.toDateString() %></td>
                     <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" download>Download</a></td>
-                    <td><% if(expense.status) { %><div class="bg-success">Approved</div><% } else { %><div class="bg-warning">Pending</div><% } %></td>
+                    <td><% if(expense.status) { %><div class="btn btn-success">Approved</div><% } else { %><div class="btn btn-warning">Pending</div><% } %></td>
                   </tr>
                 <% }) %>
             </tbody>
