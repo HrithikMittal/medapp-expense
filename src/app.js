@@ -39,7 +39,7 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
   cookie: {
-  	httpOnly: true,
+    secure: true,
   	expires: new Date(Date.now() + 60 * 60 * 1000)
   },
   store: new MongoStore({

@@ -375,7 +375,7 @@ router.post("/expenses/add", isEmployeeLoggedIn, uploadBill.single("billImage"),
 				return false
 			}
 		}).withMessage("Invalid expense type!").trim().escape(),
-		check("amount").not().isEmpty().withMessage("Please enter the amount").custom((value, { req }) => Number(value)).withMessage("Invalid amount!"),
+		check("amount").not().isEmpty().withMessage("Please enter the amount").custom((value) => Number(value)).withMessage("Invalid amount!"),
 		check("mode").custom((value, { req }) => {
 			if(req.body.expenseType === "travel") {
 				if(req.body.mode && ["car", "bus", "flight", "train", "cab", ,"mo-bike", "other"].includes(req.body.mode)) {
