@@ -154,7 +154,7 @@ router.post("/register", isEmployeeLoggedOut, [
 })
 
 router.get("/logout", isEmployeeLoggedIn, (req, res) => {
-	req.session.employee = null
+	req.session.destroy()
 	res.redirect("/employee/login")
 })
 
@@ -368,7 +368,7 @@ router.get("/expenses/bill", isEmployeeLoggedIn, async (req, res) => {
 
 router.post("/expenses/add", isEmployeeLoggedIn, uploadBill.single("billImage"), [
 		check("expenseType").not().isEmpty().withMessage("Please select the expense type.").custom((value, {req}) => {
-			if(["travel", "refreshment", "flight", "stationary", "emergency", "miscellaneous"].includes(req.body.expenseType)) {
+			if(["travel", "refreshment", "stationary", "emergency", "miscellaneous"].includes(req.body.expenseType)) {
 				return true
 			} else {
 				req.body.expenseType = null
@@ -388,7 +388,7 @@ router.post("/expenses/add", isEmployeeLoggedIn, uploadBill.single("billImage"),
 			}
 		}).trim().escape(),
 		check("from").custom((value, { req }) => {
-			if(req.body.expenseType === "flight") {
+			if(req.body.expenseType === "travel") {
 				if(req.body.from) {
 					return true
 				}else {
@@ -399,7 +399,7 @@ router.post("/expenses/add", isEmployeeLoggedIn, uploadBill.single("billImage"),
 			}
 		}).trim().escape(),
 		check("to").custom((value, { req }) => {
-			if(req.body.expenseType === "flight") {
+			if(req.body.expenseType === "travel") {
 				if(req.body.to) {
 					return true
 				}else {
@@ -459,9 +459,6 @@ router.post("/expenses/add", isEmployeeLoggedIn, uploadBill.single("billImage"),
 
 			if(expenseType === "travel") {
 				newExpense.mode = mode
-			}
-
-			if(expenseType === "flight") {
 				newExpense.from = from
 				newExpense.to = to
 			}

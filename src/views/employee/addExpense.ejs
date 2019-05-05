@@ -14,7 +14,6 @@
                 <option value="" <% if(!expenseType) { %>selected<% } %> disabled>Choose</option>
                 <option value="travel" <% if(expenseType === "travel") { %>selected <% } %>>Travel Expense</option>
                 <option value="refreshment" <% if(expenseType === "refreshment") { %>selected <% } %>>Refreshment Expense</option>
-                <option value="flight" <% if(expenseType === "flight") { %>selected <% } %>>Flight Expense</option>
                 <option value="stationary" <% if(expenseType === "stationary") { %>selected <% } %>>Stationary Expense</option>
                 <option value="emergency" <% if(expenseType === "emergency") { %>selected <% } %>>Emergency Expense</option>
                 <option value="miscellaneous" <% if(expenseType === "miscellaneous") { %>selected <% } %>>Miscellaneous Expense</option>
@@ -39,11 +38,11 @@
             </div>
             <div class="form-group hide" style="display:none" id="from">
               <label for="from">From</label>
-              <input type="text" class="form-control clear" name="from" placeholder="Flight started from" value="<%= from %>" required>
+              <input type="text" class="form-control clear" name="from" placeholder="Started at" value="<%= from %>" required>
             </div>
             <div class="form-group hide"  style="display:none" id="to">
               <label for="to">To</label>
-              <input type="text" class="form-control clear" name="to" placeholder="Flight end in" value="<%= to %>" required>
+              <input type="text" class="form-control clear" name="to" placeholder="Ended at" value="<%= to %>" required>
             </div>
             <div class="form-group hide" style="display:none" id="detail">
               <label for="detail">Detail</label>
@@ -100,21 +99,12 @@
         $detail.style.display = "block"
         $billImage.style.display = "block"
         $submit.style.display = "block"
-      } else if(expenseType === "flight") {
+      } else if(expenseType === "travel") {
         hide_all_inputs($hide_all)
         disable_specific_inputs()
         $amount.style.display = "block"
         $from.style.display = "block"
         $to.style.display = "block"
-        $detail.style.display = "block"
-        $billImage.style.display = "block"
-        $submit.style.display = "block"
-        $from.removeAttribute("disabled")
-        $to.removeAttribute("disabled")
-      } else if(expenseType === "travel") {
-        hide_all_inputs($hide_all)
-        disable_specific_inputs()
-        $amount.style.display = "block"
         $mode.style.display = "block"
         $detail.style.display = "block"
         $billImage.style.display = "block"

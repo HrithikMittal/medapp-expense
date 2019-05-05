@@ -82,6 +82,8 @@
 									<td>
 										<% if(expense.status === true) { %>
 											Approved
+										<% } else if(expense.status === false){ %>
+											Disapproved
 										<% } else { %>
 											Pending
 										<% } %>
@@ -89,7 +91,10 @@
 									<td>
 										<% if(expense.status === true) { %>
 											<a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=inactive" class="btn btn-sm btn-outline-secondary">Disapprove</a>
+										<% } else if(expense.status === false) { %>
+											<a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=active" class="btn btn-sm btn-outline-secondary">Approve</a>
 										<% } else { %>
+											<a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=inactive" class="btn btn-sm btn-outline-secondary">Disapprove</a>
 											<a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=active" class="btn btn-sm btn-outline-secondary">Approve</a>
 										<% } %>
 									</td>

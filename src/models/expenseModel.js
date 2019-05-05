@@ -36,7 +36,7 @@ const ExpenseSchema = new mongoose.Schema({
 	},
 	status: {
 		type: Boolean,
-		default: false
+		default: undefined
 	},
 	employee: {
 		type: mongoose.Schema.Types.ObjectId,

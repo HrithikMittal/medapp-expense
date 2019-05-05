@@ -59,7 +59,7 @@ router.post("/login", isAdminLoggedOut, [
 
 
 router.get("/logout", isAdminLoggedIn, (req, res) => {
-	req.session.admin = null
+	req.session.destroy()
 	res.redirect("/medapp-expense-admin/login")
 })
 
@@ -204,6 +204,32 @@ router.get("/employee/avatar", isAdminLoggedIn, async (req, res) => {
 		res.send(employee.avatar)
 	} catch(e) {
 		res.sendStatus(500)
+	}
+})
+
+router.get("/employee/delete", isAdminLoggedIn, async (req, res) => {
+	try {
+		if(req.query.emp) {
+			const employee = await Employee.findById(req.query.emp)
+			if(!employee) {
+				req.flash("danger", "No such employee found!")
+				return res.redirect("/medapp-expense-admin/dashboard")
+			}
+
+			await employee.remove()
+
+			req.flash("success", "Employee removed successfully!")
+			res.redirect("/medapp-expense-admin/employee")
+		}else {
+			const employees = await Employee.find({})
+			res.render("./admin/viewEmployee", {
+				pageTitle: title.adminViewEmployee,
+				employees,
+				employee: ""
+			})
+		}
+	} catch(e) {
+		res.status(400).send(`<h3>Something went wrong!</h3><p>${e}</p>`)
 	}
 })
 

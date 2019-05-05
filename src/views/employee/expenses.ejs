@@ -18,6 +18,8 @@
             <tr class="table-primary">
               <th scope="col">Amount</th>
               <th scope="col">Mode of Travel</th>
+              <th scope="col">From</th>
+              <th scope="col">To</th>
               <th scope="col">Detail</th>
               <th scope="col">Date</th>
               <th scope="col">Bill Image</th>
@@ -31,10 +33,20 @@
                   <tr>
                     <td><%= expense.amount %></td>
                     <td><%= expense.mode %></td>
+                    <td><%= expense.from %></td>
+                    <td><%= expense.to %></td>
                     <td><%= expense.detail %></td>
                     <td><%= expense.createdAt.toDateString() %></td>
                     <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
-                   <td><% if(expense.status) { %><div class="btn btn-success">Approved</div><% } else { %><div class="btn btn-warning">Pending</div><% } %></td>
+                   <td>
+                      <% if(expense.status === true) { %>
+                        <div class="btn btn-success">Approved</div>
+                      <% } else if(expense.status === false){ %>
+                        <div class="btn btn-danger">disapproved</div>
+                      <% } else { %>
+                      <div class="btn btn-warning">pending</div>
+                      <% } %>
+                    </td>
                   </tr>
                 <% } %>
               <% }) %>
@@ -72,49 +84,15 @@
                       <td><%= expense.detail %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
-                      <td><% if(expense.status) { %><div class="btn btn-success">Approved</div><% } else { %><div class="btn btn-warning">Pending</div><% } %></td>
-                    </tr>
-                <% } %>
-              <% }) %>
-            <% } %>
-          </tbody>
-        </table>
-      </div>
-      </div>
-      <div class="card-footer">
-        <p class="float-right">Total Amount = <%= totalAmount %></p>
-      </div>
-    </div>
-    <div class="card bg-light mb-3">
-      <div class="card-header">
-        Flight Expenses
-      </div>
-      <div class="card-body">
-        <div class="table-responsive">
-        <table class="table table-striped">
-          <thead>
-            <tr class="table-primary">
-              <th scope="col">Amount</th>
-              <th scope="col">From</th>
-              <th scope="col">To</th>
-              <th scope="col">Detail</th>
-              <th scope="col">Date</th>
-              <th scope="col">Bill Image</th>
-              <th scope="col">Status</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% if(expenses) { totalAmount = 0 %>
-              <% expenses.forEach((expense) => { %>
-                <%  if(expense.expenseType === "flight") { totalAmount += expense.amount %>
-                    <tr>
-                      <td><%= expense.amount %></td>
-                      <td><%= expense.from %></td>
-                      <td><%= expense.to %></td>
-                      <td><%= expense.detail %></td>
-                      <td><%= expense.createdAt.toDateString() %></td>
-                      <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
-                      <td><% if(expense.status) { %><div class="btn btn-success">Approved</div><% } else { %><div class="btn btn-warning">Pending</div><% } %></td>
+                      <td>
+                        <% if(expense.status === true) { %>
+                          <div class="btn btn-success">Approved</div>
+                        <% } else if(expense.status === false){ %>
+                          <div class="btn btn-danger">disapproved</div>
+                        <% } else { %>
+                          <div class="btn btn-warning">pending</div>
+                        <% } %>
+                      </td>
                     </tr>
                 <% } %>
               <% }) %>
@@ -133,7 +111,7 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-          <table class="table table-striped">
+          <table class="table table-hover">
           <thead>
             <tr class="table-primary">
               <th scope="col">Amount</th>
@@ -147,12 +125,20 @@
             <% if(expenses) { totalAmount = 0 %>
               <% expenses.forEach((expense) => { %>
                 <%  if(expense.expenseType === "stationary") { totalAmount += expense.amount %>
-                    <tr class="text-white">
+                    <tr>
                       <td><%= expense.amount %></td>
                       <td><%= expense.detail %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
-                      <td><% if(expense.status) { %><div class="btn btn-success">Approved</div><% } else { %><div class="btn btn-warning">Pending</div><% } %></td>
+                      <td>
+                        <% if(expense.status === true) { %>
+                        <div class="btn btn-success">Approved</div>
+                        <% } else if(expense.status === false){ %>
+                          <div class="btn btn-danger">disapproved</div>
+                        <% } else { %>
+                          <div class="btn btn-warning">pending</div>
+                        <% } %>
+                      </td>
                     </tr>
                   <% } %>
               <% }) %>
@@ -190,7 +176,15 @@
                       <td><%= expense.detail %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
-                      <td><% if(expense.status) { %><div class="btn btn-success">Approved</div><% } else { %><div class="btn btn-warning">Pending</div><% } %></td>
+                      <td>
+                        <% if(expense.status === true) { %>
+                          <div class="btn btn-success">Approved</div>
+                        <% } else if(expense.status === false){ %>
+                          <div class="btn btn-danger">disapproved</div>
+                        <% } else { %>
+                          <div class="btn btn-warning">pending</div>
+                        <% } %>
+                      </td>
                     </tr>
                   <% } %>
               <% }) %>
@@ -228,7 +222,15 @@
                       <td><%= expense.detail %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
-                      <td><% if(expense.status) { %><div class="btn btn-success">Approved</div><% } else { %><div class="btn btn-warning">Pending</div><% } %></td>
+                      <td>
+                        <% if(expense.status === true) { %>
+                          <div class="btn btn-success">Approved</div>
+                        <% } else if(expense.status === false){ %>
+                          <div class="btn btn-danger">disapproved</div>
+                        <% } else { %>
+                          <div class="btn btn-warning">pending</div>
+                        <% } %>
+                      </td>
                     </tr>
                   <% } %>
               <% }) %>
