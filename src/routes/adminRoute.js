@@ -218,6 +218,8 @@ router.get("/employee/delete", isAdminLoggedIn, async (req, res) => {
 
 			await employee.remove()
 
+			await Expense.deleteMany({ employee: req.query.emp })
+
 			req.flash("success", "Employee removed successfully!")
 			res.redirect("/medapp-expense-admin/employee")
 		}else {

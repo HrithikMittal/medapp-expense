@@ -35,7 +35,7 @@
             <% }) %>
           </select>
         </div>
-        <button type="submit" class="btn btn-primary hide" id="search" style="display: none">Search</button>
+        <button type="submit" onclick="this.disabled=true; this.form.submit(); return false;" class="btn btn-primary hide" id="search" style="display: none">Search</button>
       </form>
     </div>
     <% if(expenses.length > 0 && viewBy) { let totalAmount = 0 %>
