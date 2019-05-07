@@ -49,7 +49,7 @@
 		          <% } %>
 		        </div>
 		        <div class="card-body">
-							<div class="table-responsive">
+				<div class="table-responsive">
 		          <table class="table table-striped">
 		            <thead>
 		              	<tr>
@@ -68,7 +68,7 @@
 		            </thead>
 		            <tbody>
 		                <% if(expenses) { %>
-							<% expenses.forEach((expense) => { totalAmount += expense.amount %>
+							<% expenses.forEach((expense) => { %>
 								<tr>
 									<td><%= expense.expenseType %></td>
 									<td><%= expense.amount %></td>
@@ -89,7 +89,7 @@
 										<% } %>
 									</td>
 									<td>
-										<% if(expense.status === true) { %>
+										<% if(expense.status === true) { totalAmount += expense.amount %>
 											<a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=inactive" class="btn btn-sm btn-outline-secondary">Disapprove</a>
 										<% } else if(expense.status === false) { %>
 											<a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=active" class="btn btn-sm btn-outline-secondary">Approve</a>
@@ -103,7 +103,7 @@
 						<% } %>
 		            </tbody>
 		          </table>
-							</div>
+				</div>
 		        </div>
 		        <div class="card-footer">
 		          <p class="float-right">Total Amount: <%= totalAmount %></p>

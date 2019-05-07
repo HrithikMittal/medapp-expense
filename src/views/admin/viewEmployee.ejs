@@ -13,7 +13,7 @@
           <thead>
             <tr class="table-primary">
               <th scope="col">Employee Name</th>
-              <th scope="col">Email</th>
+              <th scope="col">ID</th>
               <th scope="col">Designation</th>
               <th scope="col">Department</th>
               <th scope="col">Avatar</th>
@@ -57,9 +57,194 @@
                       >Delete Employee</button>
                   </td>
                 </tr>
+              <% } else { %>
+                <tr>
+                  <td colspan="10">
+                    <div class="jumbotron text-muted text-center">
+                      Sorry no employees exists!
+                    </div>
+                  </td>
+                </tr>
               <% } %>
           </tbody>
         </table>
+        <% if(employee) { let totalAmount = 0 %>
+          <div class="card mt-4">
+            <div class="card-header">
+              <h4>Approved Expenses</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                        <tr>
+                  <th scope="col">Expense Type</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Mode of Travel</th>
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                  <th scope="col">Details</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Bill Image</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Change Status</th>
+                </tr>
+                    </thead>
+                    <tbody>
+                  <% if(approvedExpenses.length > 0) { %>
+                  <% approvedExpenses.forEach((expense) => { totalAmount += expense.amount %>
+                    <tr>
+                      <td><%= expense.expenseType %></td>
+                      <td><%= expense.amount %></td>
+                      <td><%= expense.mode || "Nil" %></td>
+                      <td><%= expense.from || "Nil" %></td>
+                      <td><%= expense.to || "Nil" %></td>
+                      <td><%= expense.detail %></td>
+                      <td><%= expense.createdAt.toDateString() %></td>
+                      <td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
+                      <td>
+                        Approved
+                      </td>
+                      <td>
+                        <a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=inactive" class="btn btn-sm btn-outline-secondary">Disapprove</a>
+                      </td>
+                    </tr>
+                  <% }) %>
+                <% } else { %>
+                  <tr>
+                    <td colspan="10">
+                      <div class="jumbotron text-center text-muted">
+                        No approved Expenses
+                      </div>
+                    </td>
+                  </tr>
+                <% } %>
+                    </tbody>
+                  </table>
+            </div>
+            </div>
+            <div class="card-footer text-right">
+              Total Amount: <%= totalAmount %>
+            </div>
+          </div>
+          <div class="card mt-4">
+            <div class="card-header">
+              <h4>Disapproved Expenses</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                        <tr>
+                  <th scope="col">Expense Type</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Mode of Travel</th>
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                  <th scope="col">Details</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Bill Image</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Change Status</th>
+                </tr>
+                    </thead>
+                    <tbody>
+                  <%  totalAmount = 0 ; if(disapprovedExpenses.length > 0) { %>
+                  <% disapprovedExpenses.forEach((expense) => { totalAmount += expense.amount %>
+                    <tr>
+                      <td><%= expense.expenseType %></td>
+                      <td><%= expense.amount %></td>
+                      <td><%= expense.mode || "Nil" %></td>
+                      <td><%= expense.from || "Nil" %></td>
+                      <td><%= expense.to || "Nil" %></td>
+                      <td><%= expense.detail %></td>
+                      <td><%= expense.createdAt.toDateString() %></td>
+                      <td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
+                      <td>
+                        Disapproved
+                      </td>
+                      <td>
+                        <a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=active" class="btn btn-sm btn-outline-secondary">Approve</a>
+                      </td>
+                    </tr>
+                  <% }) %>
+                <% } else { %>
+                    <tr>
+                    <td colspan="10">
+                      <div class="jumbotron text-center text-muted">
+                        No disapproved Expenses
+                      </div>
+                    </td>
+                  </tr>
+                <% } %>
+                    </tbody>
+                  </table>
+            </div>
+            </div>
+            <div class="card-footer text-right">
+              Total Amount: <%= totalAmount %>
+            </div>
+          </div>
+          <div class="card mt-4">
+            <div class="card-header">
+              <h4>Pending Expenses</h4>
+            </div>
+            <div class="card-body">
+              <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                        <tr>
+                  <th scope="col">Expense Type</th>
+                  <th scope="col">Amount</th>
+                  <th scope="col">Mode of Travel</th>
+                  <th scope="col">From</th>
+                  <th scope="col">To</th>
+                  <th scope="col">Details</th>
+                  <th scope="col">Date</th>
+                  <th scope="col">Bill Image</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Change Status</th>
+                </tr>
+                    </thead>
+                    <tbody>
+                  <% totalAmount = 0; if(pendingExpenses.length > 0) { %>
+                  <% pendingExpenses.forEach((expense) => { totalAmount += expense.amount %>
+                    <tr>
+                      <td><%= expense.expenseType %></td>
+                      <td><%= expense.amount %></td>
+                      <td><%= expense.mode || "Nil" %></td>
+                      <td><%= expense.from || "Nil" %></td>
+                      <td><%= expense.to || "Nil" %></td>
+                      <td><%= expense.detail %></td>
+                      <td><%= expense.createdAt.toDateString() %></td>
+                      <td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
+                      <td>
+                        Pending
+                      </td>
+                      <td>
+                        <a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=inactive" class="btn btn-sm btn-outline-secondary">Disapprove</a>
+                        <a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=active" class="btn btn-sm btn-outline-secondary">Approve</a>
+                      </td>
+                    </tr>
+                  <% }) %>
+                <% } else { %>
+                    <tr>
+                    <td colspan="10">
+                      <div class="jumbotron text-center text-muted">
+                        No pending Expenses
+                      </div>
+                    </td>
+                  </tr>
+                <% } %>
+                    </tbody>
+                  </table>
+            </div>
+            </div>
+            <div class="card-footer text-right">
+              Total Amount: <%= totalAmount %>
+            </div>
+          </div>
+        <% } %>
       </div>
       </div>
     </div>
