@@ -17,7 +17,9 @@
               <th scope="col">Designation</th>
               <th scope="col">Department</th>
               <th scope="col">Avatar</th>
-              <th scope="col">View Detail</th>
+              <% if(employees.length > 0) { %>
+                <th scope="col">View Detail</th>
+              <% } %>
               <th scope="col">Delete</th>
             </tr>
           </thead>
