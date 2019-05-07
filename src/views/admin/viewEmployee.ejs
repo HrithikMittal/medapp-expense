@@ -17,6 +17,7 @@
               <th scope="col">Designation</th>
               <th scope="col">Department</th>
               <th scope="col">Avatar</th>
+              <th scope="col">View Detail</th>
               <th scope="col">Delete</th>
             </tr>
           </thead>
@@ -29,6 +30,7 @@
                   <td><%= employee.designation || "Nil" %></td>
                   <td><%= employee.department || "Nil" %></td>
                   <td><a href="/medapp-expense-admin/employee/avatar?emp=<%= employee._id %>"><img src="/medapp-expense-admin/employee/avatar?emp=<%= employee._id %>" style="width: 100px"></a></td>
+                  <td><a href="/medapp-expense-admin/employee?emp=<%= employee._id %>" class="btn btn-sm btn-outline-primary">View Detail</a></td>
                   <td><button onClick="(() => {
                                         if(confirm('Are you really want to delete employee!')) 
                                         {
