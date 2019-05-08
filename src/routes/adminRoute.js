@@ -1,6 +1,7 @@
 const express = require("express")
 const mongoose = require("mongoose")
 const moment = require("moment")
+const sharp = require("sharp")
 const Admin = require("../models/adminModel")
 const Employee = require("../models/employeeModel")
 const Expense = require("../models/expenseModel")
@@ -214,7 +215,16 @@ router.get("/employee", isAdminLoggedIn, async (req, res) => {
 
 router.get("/employee/avatar", isAdminLoggedIn, async (req, res) => {
 	try {
+		if(!req.query.emp) {
+			return res.status(404).send("<h3>Not Found!</h3>")
+		}
+
 		const employee = await Employee.findOne({ _id: req.query.emp}, "avatar")
+		
+		if(employee.avatar && req.query.size === "small") {
+			employee.avatar = await sharp(employee.avatar).resize({ width: 500, height: 500}).toBuffer()
+		}
+
 		res.set("Content-Type", "image/png")
 		res.send(employee.avatar)
 	} catch(e) {

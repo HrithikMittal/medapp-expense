@@ -38,7 +38,8 @@ const title = {
 	employeeDashboard: "Dashboard | Employee",
 	employeeProfile: "Profile | Employee",
 	employeeExpenses: "Expenses | Employee",
-	employeeExpensesViewBy: "View Expense By | Employee"
+	employeeExpensesViewBy: "View Expense By | Employee",
+	employeeAddExpense: "Add Expense | Employee"
 }
 
 router.get("/login", isEmployeeLoggedOut, (req, res) => {
@@ -252,6 +253,11 @@ router.post("/profile", isEmployeeLoggedIn, uploadAvatar.single("avatar"), [
 router.get("/avatar", isEmployeeLoggedIn, async (req, res) => {
 	try {
 		const employee = await Employee.findById(req.session.employee._id)
+
+		if(employee.avatar && req.query.size === "small") {
+			employee.avatar = await sharp(employee.avatar).resize({ width: 500, height: 500}).toBuffer()
+		}
+
 		res.set("Content-Type", "image/png")
 		res.send(employee.avatar)
 	} catch(e) {
@@ -267,6 +273,7 @@ router.get("/expenses/viewBy", isEmployeeLoggedIn, async (req, res) => {
 
 		for(let y = moment().year(); y >= 2010; y--)
 			yearArray.push(String(y))
+Delete
 
 		if(["month", "year"].includes(req.query.option)) {
 
