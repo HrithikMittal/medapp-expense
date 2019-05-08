@@ -73,6 +73,7 @@
           </tbody>
         </table>
         <% if(employee) { let totalAmount = 0 %>
+        <% function convertHTMLEntity(text){ if(text) return text.replace(/&[#A-Za-z0-9]+;/gi) } %>
           <div class="card mt-4">
             <div class="card-header">
               <h4>Approved Expenses</h4>
@@ -101,9 +102,9 @@
                       <td><%= expense.expenseType %></td>
                       <td><%= expense.amount %></td>
                       <td><%= expense.mode || "Nil" %></td>
-                      <td><%= expense.from || "Nil" %></td>
-                      <td><%= expense.to || "Nil" %></td>
-                      <td><%= expense.detail %></td>
+                      <td><%= convertHTMLEntity(expense.from) || "Nil" %></td>
+                      <td><%= convertHTMLEntity(expense.to) || "Nil" %></td>
+                      <td><%= convertHTMLEntity(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
                       <td>
@@ -159,9 +160,9 @@
                       <td><%= expense.expenseType %></td>
                       <td><%= expense.amount %></td>
                       <td><%= expense.mode || "Nil" %></td>
-                      <td><%= expense.from || "Nil" %></td>
-                      <td><%= expense.to || "Nil" %></td>
-                      <td><%= expense.detail %></td>
+                      <td><%= convertHTMLEntity(expense.from) || "Nil" %></td>
+                      <td><%= convertHTMLEntity(expense.to) || "Nil" %></td>
+                      <td><%= convertHTMLEntity(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
                       <td>
@@ -217,9 +218,9 @@
                       <td><%= expense.expenseType %></td>
                       <td><%= expense.amount %></td>
                       <td><%= expense.mode || "Nil" %></td>
-                      <td><%= expense.from || "Nil" %></td>
-                      <td><%= expense.to || "Nil" %></td>
-                      <td><%= expense.detail %></td>
+                      <td><%= convertHTMLEntity(expense.from) || "Nil" %></td>
+                      <td><%= convertHTMLEntity(expense.to) || "Nil" %></td>
+                      <td><%= convertHTMLEntity(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
                       <td>

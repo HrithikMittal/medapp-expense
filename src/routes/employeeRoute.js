@@ -452,15 +452,15 @@ router.post("/expenses/add", isEmployeeLoggedIn, uploadBill.single("billImage"),
 			const newExpense = new Expense({
 				expenseType,
 				amount,
-				detail,
+				detail: detail.toLowerCase(),
 				billImage: buffer,
 				employee: req.session.employee._id
 			})
 
 			if(expenseType === "travel") {
 				newExpense.mode = mode
-				newExpense.from = from
-				newExpense.to = to
+				newExpense.from = from.toLowerCase()
+				newExpense.to = to.toLowerCase()
 			}
 
 			await newExpense.save()

@@ -7,6 +7,7 @@
         <a class="btn btn-outline-primary" href="/employee/logout">Logout</a>
       </div>
     <% let totalAmount = 0 %>
+    <% function convertHTMLEntity(text){ if(text) return text.replace(/&[#A-Za-z0-9]+;/gi) } %>
     <div class="card bg-light mb-3">
       <div class="card-header">
         Travel Expenses
@@ -33,9 +34,9 @@
                   <tr>
                     <td><%= expense.amount %></td>
                     <td><%= expense.mode %></td>
-                    <td><%= expense.from %></td>
-                    <td><%= expense.to %></td>
-                    <td><%= expense.detail %></td>
+                    <td><%= convertHTMLEntity(expense.from) || "Nil" %></td>
+                    <td><%= convertHTMLEntity(expense.to) || "Nil" %></td>
+                    <td><%= convertHTMLEntity(expense.detail) %></td>
                     <td><%= expense.createdAt.toDateString() %></td>
                     <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
                    <td>
@@ -81,7 +82,7 @@
                 <%  if(expense.expenseType === "refreshment") { totalAmount += expense.amount %>
                     <tr>
                       <td><%= expense.amount %></td>
-                      <td><%= expense.detail %></td>
+                      <td><%= convertHTMLEntity(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
                       <td>
@@ -127,7 +128,7 @@
                 <%  if(expense.expenseType === "stationary") { totalAmount += expense.amount %>
                     <tr>
                       <td><%= expense.amount %></td>
-                      <td><%= expense.detail %></td>
+                      <td><%= convertHTMLEntity(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
                       <td>
@@ -173,7 +174,7 @@
                 <%  if(expense.expenseType === "emergency") { totalAmount += expense.amount %>
                     <tr>
                       <td><%= expense.amount %></td>
-                      <td><%= expense.detail %></td>
+                      <td><%= convertHTMLEntity(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
                       <td>
@@ -219,7 +220,7 @@
                 <%  if(expense.expenseType === "miscellaneous") { totalAmount += expense.amount %>
                     <tr>
                       <td><%= expense.amount %></td>
-                      <td><%= expense.detail %></td>
+                      <td><%= convertHTMLEntity(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
                       <td>
