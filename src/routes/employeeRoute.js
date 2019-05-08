@@ -3,6 +3,7 @@ const multer = require("multer")
 const moment = require("moment")
 const express = require("express")
 const validator = require("validator")
+const { decode } = require("he")
 const Employee = require("../models/employeeModel")
 const mongoose = require("mongoose")
 const Expense = require("../models/expenseModel")
@@ -303,7 +304,8 @@ router.get("/expenses/viewBy", isEmployeeLoggedIn, async (req, res) => {
 				year,
 				monthArray,
 				yearArray,
-				expenses
+				expenses,
+				decode
 			})
 		} else {
 			res.render("./employee/expensesViewBy", {
@@ -324,9 +326,11 @@ router.get("/expenses/viewBy", isEmployeeLoggedIn, async (req, res) => {
 
 router.get("/expenses", isEmployeeLoggedIn, async (req, res) => {
 	const expenses = await Expense.find({ employee: req.session.employee._id })
+
 	res.render("./employee/expenses", {
 		pageTitle: title.employeeExpenses,
-		expenses
+		expenses,
+		decode
 	})
 })
 

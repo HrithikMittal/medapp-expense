@@ -40,7 +40,6 @@
       		</form>
 		</div>
 		<% if(expenses.length > 0 && viewBy) { let totalAmount = 0 %>
-		<% function convertHTMLEntity(text){ if(text) return text.replace(/&[#A-Za-z0-9]+;/gi) } %>
 		    <div class="card m-3">
 		        <div class="card-header">
 		          <% if(viewBy === "month") { %>
@@ -74,9 +73,14 @@
 									<td><%= expense.expenseType %></td>
 									<td><%= expense.amount %></td>
 									<td><%= expense.mode || "Nil" %></td>
-									<td><%= convertHTMLEntity(expense.from) || "Nil" %></td>
-									<td><%= convertHTMLEntity(expense.to) || "Nil" %></td>
-									<td><%= convertHTMLEntity(expense.detail) %></td>
+									<% if(expense.from && expense.to) { %>
+										<td><%= decode(expense.from) %></td>
+										<td><%= decode(expense.to) %></td>
+									<% } else { %>
+										<td>NIL</td>
+										<td>NIL</td>
+									<% } %>
+									<td><%= decode(expense.detail) %></td>
 									<td><%= expense.createdAt.toDateString() %></td>
 									<td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
 									<td><a href="/medapp-expense-admin/employee?emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary">View Employee</a></td>

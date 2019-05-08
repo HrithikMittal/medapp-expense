@@ -4,6 +4,7 @@ const moment = require("moment")
 const Admin = require("../models/adminModel")
 const Employee = require("../models/employeeModel")
 const Expense = require("../models/expenseModel")
+const { decode } = require("he")
 const { isAdminLoggedIn, isAdminLoggedOut } = require("../middleware/auth.js")
 const { check, validationResult } = require("express-validator/check");
 
@@ -106,7 +107,8 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 				year,
 				monthArray,
 				yearArray,
-				expenses
+				expenses,
+				decode
 			})			
 		} else {
 			let month = moment().month() + 1
@@ -129,7 +131,8 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 				year,
 				monthArray,
 				yearArray,
-				expenses
+				expenses,
+				decode
 			})
 		}
 	} catch(e) {
@@ -189,7 +192,8 @@ router.get("/employee", isAdminLoggedIn, async (req, res) => {
 				employees: "",
 				approvedExpenses,
 				disapprovedExpenses,
-				pendingExpenses
+				pendingExpenses,
+				decode
 			})
 		}else {
 			const employees = await Employee.find({})
@@ -200,7 +204,6 @@ router.get("/employee", isAdminLoggedIn, async (req, res) => {
 				approvedExpenses: "",
 				disapprovedExpenses: "",
 				pendingExpenses: ""
-
 			})
 		}
 
