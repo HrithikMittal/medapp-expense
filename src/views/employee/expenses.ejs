@@ -31,7 +31,7 @@
               <% expenses.forEach((expense) => { %>
                 <% if(expense.expenseType === "travel") { totalAmount += expense.amount %>
                   <tr>
-                    <td><%= expense.amount %></td>
+                    <td>Rs. <%= expense.amount %></td>
                     <td><%= expense.mode %></td>
                     <% if(expense.from && expense.to) { %>
                       <td><%= decode(expense.from) %></td>
@@ -85,7 +85,7 @@
               <% expenses.forEach((expense) => { %>
                 <%  if(expense.expenseType === "refreshment") { totalAmount += expense.amount %>
                     <tr>
-                      <td><%= expense.amount %></td>
+                      <td>Rs. <%= expense.amount %></td>
                       <td><%= decode(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
@@ -131,7 +131,7 @@
               <% expenses.forEach((expense) => { %>
                 <%  if(expense.expenseType === "stationary") { totalAmount += expense.amount %>
                     <tr>
-                      <td><%= expense.amount %></td>
+                      <td>Rs. <%= expense.amount %></td>
                       <td><%= decode(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
@@ -177,7 +177,7 @@
               <% expenses.forEach((expense) => { %>
                 <%  if(expense.expenseType === "emergency") { totalAmount += expense.amount %>
                     <tr>
-                      <td><%= expense.amount %></td>
+                      <td>Rs. <%= expense.amount %></td>
                       <td><%= decode(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>
@@ -223,7 +223,7 @@
               <% expenses.forEach((expense) => { %>
                 <%  if(expense.expenseType === "miscellaneous") { totalAmount += expense.amount %>
                     <tr>
-                      <td><%= expense.amount %></td>
+                      <td>Rs. <%= expense.amount %></td>
                       <td><%= decode(expense.detail) %></td>
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/employee/expenses/bill?eid=<%= expense._id %>" class="btn btn-secondary" download>Download</a></td>

@@ -9,13 +9,18 @@
       </div>
       <div class="card-body">
         <div class="table-responsive">
-        <table class="table table-hover">
+        <table class="table table-hover text-center">
           <thead>
             <tr class="table-primary">
               <th scope="col">Employee Name</th>
               <th scope="col">ID</th>
               <th scope="col">Designation</th>
               <th scope="col">Department</th>
+              <% if(employees.length > 0) { %>
+                <th scope="col"><small>Approved Expenses <br/>(This month)</small></th>
+                <th scope="col"><small>Disapproved Expenses <br/>(This month)</small></th>
+                <th scope="col"><small>Pending Expenses <br/>(This month)</small></th>
+              <% } %>
               <th scope="col">Avatar</th>
               <% if(employees.length > 0) { %>
                 <th scope="col">View Detail</th>
@@ -24,13 +29,25 @@
             </tr>
           </thead>
           <tbody>
-            <% if(employees.length > 0) { %>
-              <% employees.forEach((employee) => { %>
+            <% if(employees.length > 0) { let appExpense, disappExpense, penExpense %>
+              <% employees.forEach((employee) => { appExpense = disappExpense = penExpense = 0 %>
                 <tr>
                   <td><%= employee.name %></td>
                   <td><%= employee.email %></td>
                   <td><%= employee.designation || "Nil" %></td>
                   <td><%= employee.department || "Nil" %></td>
+                  <% if(approvedExpenses) { %>
+                    <% approvedExpenses.forEach((expense) => { if(expense.employee.equals(employee._id)) appExpense += expense.amount }) %>
+                  <% } %>
+                  <% if(disapprovedExpenses) { %>
+                    <% disapprovedExpenses.forEach((expense) => { if(expense.employee.equals(employee._id)) disappExpense += expense.amount }) %>
+                  <% } %>
+                  <% if(pendingExpenses) { %>
+                    <% pendingExpenses.forEach((expense) => { if(expense.employee.equals(employee._id)) penExpense += expense.amount }) %>
+                  <% } %>
+                  <td>Rs. <%= appExpense %></td>
+                  <td>Rs. <%= disappExpense %></td>
+                  <td>Rs. <%= penExpense %></td>
                   <td><a href="/medapp-expense-admin/employee/avatar?emp=<%= employee._id %>"><img src="/medapp-expense-admin/employee/avatar?emp=<%= employee._id %>&size=small" style="width: 100px"></a></td>
                   <td><a href="/medapp-expense-admin/employee?emp=<%= employee._id %>" class="btn btn-sm btn-outline-primary">View Detail</a></td>
                   <td><button onClick="(() => {
@@ -99,7 +116,7 @@
                   <% approvedExpenses.forEach((expense) => { totalAmount += expense.amount %>
                     <tr>
                       <td><%= expense.expenseType %></td>
-                      <td><%= expense.amount %></td>
+                      <td>Rs. <%= expense.amount %></td>
                       <td><%= expense.mode || "Nil" %></td>
                       <% if(expense.from && expense.to) { %>
                         <td><%= decode(expense.from) %></td>
@@ -112,7 +129,7 @@
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
                       <td>
-                        Approved
+                        <div class="btn btn-success">Approved</div>
                       </td>
                       <td>
                         <a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=inactive" class="btn btn-sm btn-outline-secondary">Disapprove</a>
@@ -162,7 +179,7 @@
                   <% disapprovedExpenses.forEach((expense) => { totalAmount += expense.amount %>
                     <tr>
                       <td><%= expense.expenseType %></td>
-                      <td><%= expense.amount %></td>
+                      <td>Rs. <%= expense.amount %></td>
                       <td><%= expense.mode || "Nil" %></td>
                       <% if(expense.from && expense.to) { %>
                         <td><%= decode(expense.from) %></td>
@@ -175,7 +192,7 @@
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
                       <td>
-                        Disapproved
+                        <div class="btn btn-danger">Disapproved</div>
                       </td>
                       <td>
                         <a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=active" class="btn btn-sm btn-outline-secondary">Approve</a>
@@ -225,7 +242,7 @@
                   <% pendingExpenses.forEach((expense) => { totalAmount += expense.amount %>
                     <tr>
                       <td><%= expense.expenseType %></td>
-                      <td><%= expense.amount %></td>
+                      <td>Rs. <%= expense.amount %></td>
                       <td><%= expense.mode || "Nil" %></td>
                       <% if(expense.from && expense.to) { %>
                         <td><%= decode(expense.from) %></td>
@@ -238,7 +255,7 @@
                       <td><%= expense.createdAt.toDateString() %></td>
                       <td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
                       <td>
-                        Pending
+                        <div class="btn btn-warning">Pending</div>
                       </td>
                       <td>
                         <a href="/medapp-expense-admin/expenses?eid=<%= expense._id %>&status=inactive" class="btn btn-sm btn-outline-secondary">Disapprove</a>

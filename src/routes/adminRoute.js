@@ -214,13 +214,18 @@ router.get("/employee", isAdminLoggedIn, async (req, res) => {
 			})
 		}else {
 			const employees = await Employee.find({})
+
+			const approvedExpenses = await Expense.find({ status: true })
+			const disapprovedExpenses = await Expense.find({ status: false })
+			const pendingExpenses = await Expense.find({ status: undefined })
+
 			res.render("./admin/viewEmployee", {
 				pageTitle: title.adminViewEmployee,
 				employees,
 				employee: "",
-				approvedExpenses: "",
-				disapprovedExpenses: "",
-				pendingExpenses: ""
+				approvedExpenses,
+				disapprovedExpenses,
+				pendingExpenses
 			})
 		}
 

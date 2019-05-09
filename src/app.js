@@ -27,7 +27,7 @@ if(process.env.NODE_ENV == "production")
   })
 }
 
-app.use('/public',express.static("public"));
+app.use(express.static(__dirname + "/../public"));
 
 app.use(helmet())
 

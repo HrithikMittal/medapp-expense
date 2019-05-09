@@ -1,6 +1,6 @@
 <%- include("../partials/header.ejs") %>
-<link rel="stylesheet" href="../public/styles1.css">
-<link rel="stylesheet" href="../public/bootstrap.min.css">
+<link rel="stylesheet" href="/styles1.css">
+<link rel="stylesheet" href="/bootstrap.min.css">
 <div style="background-image: linear-gradient(45deg,#334d50,#cbcaa5); min-height:100vh;">
 	<div class="container-fluid">
 		<div class="container">
@@ -48,7 +48,7 @@
 		            Expenses of year <%= year %>
 		          <% } %>
 		        </div>
-		        <div class="card-body">
+		        <div class="card-body" style="height: 500px; overflow-y: auto">
 				<div class="table-responsive">
 		          <table class="table table-striped">
 		            <thead>
@@ -67,11 +67,11 @@
 						</tr>
 		            </thead>
 		            <tbody>
-		                <% if(expenses) { %>
+		                <% let appExpenses = 0, disappExpenses = 0, penExpenses = 0; if(expenses) { %>
 							<% expenses.forEach((expense) => { %>
 								<tr>
 									<td><%= expense.expenseType %></td>
-									<td><%= expense.amount %></td>
+									<td>Rs. <%= expense.amount %></td>
 									<td><%= expense.mode || "Nil" %></td>
 									<% if(expense.from && expense.to) { %>
 										<td><%= decode(expense.from) %></td>
@@ -85,12 +85,12 @@
 									<td><a href="/medapp-expense-admin/expenses/bill?eid=<%= expense._id %>&emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary" download>Download</a></td>
 									<td><a href="/medapp-expense-admin/employee?emp=<%= expense.employee %>" class="btn btn-sm btn-outline-primary">View Employee</a></td>
 									<td>
-										<% if(expense.status === true) { %>
-											Approved
-										<% } else if(expense.status === false){ %>
-											Disapproved
-										<% } else { %>
-											Pending
+										<% if(expense.status === true) { appExpenses += expense.amount %>
+											<div class="btn btn-success">Approved</div>
+										<% } else if(expense.status === false){ disappExpenses += expense.amount %>
+											<div class="btn btn-danger">Disapproved</div>
+										<% } else { penExpenses += expense.amount %>
+											<div class="btn btn-warning">Pending</div>
 										<% } %>
 									</td>
 									<td>
@@ -111,7 +111,9 @@
 				</div>
 		        </div>
 		        <div class="card-footer">
-		          <p class="float-right">Total Amount: <%= totalAmount %></p>
+		          <div class="float-right m-2 p-3 btn btn-primary">Pending Expense: Rs. <%= penExpenses %></div>
+		          <div class="float-right m-2 p-3 btn btn-primary">Disapproved Expense: Rs. <%= disappExpenses %></div>
+		          <div class="float-right m-2 p-3 btn btn-primary">Approved Expense: Rs. <%= appExpenses %></div>
 		        </div>
 		      </div>
 		    <% } else if(!viewBy){ %>

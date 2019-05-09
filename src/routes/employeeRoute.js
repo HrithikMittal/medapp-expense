@@ -273,7 +273,6 @@ router.get("/expenses/viewBy", isEmployeeLoggedIn, async (req, res) => {
 
 		for(let y = moment().year(); y >= 2010; y--)
 			yearArray.push(String(y))
-Delete
 
 		if(["month", "year"].includes(req.query.option)) {
 
