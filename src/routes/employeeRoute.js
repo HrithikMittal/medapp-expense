@@ -349,7 +349,8 @@ router.get("/expenses/add", isEmployeeLoggedIn, (req, res) => {
 			mode: "",
 			to: "",
 			from: "",
-			detail: ""
+			detail: "",
+			addExpense: true
 		}
 
 		res.render("./employee/addExpense", data)

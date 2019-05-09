@@ -1,5 +1,4 @@
 <%- include("../partials/header.ejs") %>
-<link rel="stylesheet" href="/bootstrap.min.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-modal/0.9.1/jquery.modal.min.css" />
 <link rel="stylesheet" type="text/css" href="/css/jquery.calculator.css"> 
 <script type="text/javascript" src="/js/jquery.plugin.min.js"></script> 
@@ -11,10 +10,10 @@
         <h2 class="display-5">Add Expense <a class="btn btn-outline-primary float-right" href="/employee/dashboard">Dashboard</a></h2>
       </div>
       <div class="card-body">
-        <form action="/employee/expenses/add" class="col-xs-7 col-lg-6 form-container" method="post" enctype="multipart/form-data" novalidate>
+        <form action="/employee/expenses/add" class="col-xs-7 col-lg-6" method="post" enctype="multipart/form-data" novalidate>
             <div class="form-group">
               <label for="expenseType">Type of Expense</label>
-              <select class="form-control" name="expenseType" id="expenseType" required>
+              <select class="form-control expense" name="expenseType" id="expenseType" required>
                 <option value="" <% if(!expenseType) { %>selected<% } %> disabled>Choose</option>
                 <option value="travel" <% if(expenseType === "travel") { %>selected <% } %>>Travel Expense</option>
                 <option value="refreshment" <% if(expenseType === "refreshment") { %>selected <% } %>>Refreshment Expense</option>
@@ -23,11 +22,11 @@
                 <option value="miscellaneous" <% if(expenseType === "miscellaneous") { %>selected <% } %>>Miscellaneous Expense</option>
               </select>
             </div>
-            <div class="form-group hide" style="display:none" id="amount">
+            <div class="form-group hide expense" style="display:none" id="amount">
               <label for="amount">Amount in Rupees</label>
               <input type="number" class="form-control clear" name="amount" id="amt" placeholder="Enter amount" value="<%= amount %>" required>
             </div>
-            <div class="form-group hide"  style="display:none" id="mode">
+            <div class="form-group hide expense"  style="display:none" id="mode">
               <label for="mode">Mode of travel</label>
               <select class="form-control clear" name="mode" placeholder="Select mode of travel" required>
                 <option value="" <% if(!mode) { %>selected<% } %> disabled>Choose</option>
@@ -40,24 +39,24 @@
                 <option value="other" <% if(mode === "other") { %>selected <% } %>>Other</option>
               </select>
             </div>
-            <div class="form-group hide" style="display:none" id="from">
+            <div class="form-group hide expense" style="display:none" id="from">
               <label for="from">From</label>
               <input type="text" class="form-control clear" name="from" placeholder="Started at" value="<%= from %>" required>
             </div>
-            <div class="form-group hide"  style="display:none" id="to">
+            <div class="form-group hide expense"  style="display:none" id="to">
               <label for="to">To</label>
               <input type="text" class="form-control clear" name="to" placeholder="Ended at" value="<%= to %>" required>
             </div>
-            <div class="form-group hide" style="display:none" id="detail">
+            <div class="form-group hide expense" style="display:none" id="detail">
               <label for="detail">Detail</label>
               <input type="text" class="form-control clear" name="detail" placeholder="Expense Detail" value="<%= detail %>" required>
             </div>
-            <div class="form-group hide" style="display:none" id="billImage">
+            <div class="form-group hide expense" style="display:none" id="billImage">
               <label for="billImage">Bill Image</label>
               <input type="file" class="form-control clear" name="billImage" placeholder="Upload Bill Image" required>
               <small>File must be less than 2 mb.</small>
             </div>
-            <button type="submit" onclick="this.disabled=true; this.form.submit(); return false;" class="btn btn-outline-primary hide" style="display:none" id="submitBtn">Submit</button>
+            <button type="submit" onclick="this.disabled=true; this.form.submit(); return false;" class="btn btn-outline-primary hide expense" style="display:none" id="submitBtn">Submit</button>
         </form>
       </div>
     </div>

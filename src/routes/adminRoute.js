@@ -213,11 +213,38 @@ router.get("/employee", isAdminLoggedIn, async (req, res) => {
 				decode
 			})
 		}else {
+
+			let month = moment().month() + 1
+			let year = moment().year()
+
 			const employees = await Employee.find({})
 
-			const approvedExpenses = await Expense.find({ status: true })
-			const disapprovedExpenses = await Expense.find({ status: false })
-			const pendingExpenses = await Expense.find({ status: undefined })
+			const approvedExpenses = await Expense.find({
+				 $expr: {
+					$and: [
+						{$eq: [{$year: "$createdAt"}, year]},
+						{$eq: [{$month: "$createdAt"}, month]}
+					]
+				}, status: true 
+			})
+
+			const disapprovedExpenses = await Expense.find({
+				 $expr: {
+					$and: [
+						{$eq: [{$year: "$createdAt"}, year]},
+						{$eq: [{$month: "$createdAt"}, month]}
+					]
+				}, status: false 
+			})
+
+			const pendingExpenses = await Expense.find({
+				 $expr: {
+					$and: [
+						{$eq: [{$year: "$createdAt"}, year]},
+						{$eq: [{$month: "$createdAt"}, month]}
+					]
+				}, status: undefined 
+			})
 
 			res.render("./admin/viewEmployee", {
 				pageTitle: title.adminViewEmployee,

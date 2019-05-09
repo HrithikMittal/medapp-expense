@@ -10,7 +10,7 @@
       <form action="/employee/expenses/viewBy" method="get" novalidate>
         <div class="form-group">
           <label for="option" class="text-white mb-3" style="font-size:27px;">View By</label>
-          <select class="form-control" name="option" value="<%= viewBy %>" id="viewBy" required>
+          <select class="form-control text-secondary" name="option" value="<%= viewBy %>" id="viewBy" required>
             <option value="" <% if(!viewBy) { %>selected<% } %> disabled>Choose</option>
             <option value="month" <% if(viewBy === "month") { %>selected <% } %>>Month</option>
             <option value="year" <% if(viewBy === "year") { %>selected <% } %>>Year</option>
@@ -18,7 +18,7 @@
         </div>
         <div class="form-group hide" id="month" style="display: none">
           <label for="month" class="text-white mb-3" style="font-size:25px;">Month</label>
-          <select class="form-control clear-select" name="month" required>
+          <select class="form-control clear-select text-secondary" name="month" required>
             <option value="" <% if(!month) { %>selected<% } %> disabled>Choose</option>
             <% let i = 1 %>
             <% monthArray.forEach((m) => {%>
@@ -28,7 +28,7 @@
         </div>
         <div class="form-group hide" id="year" style="display: none">
           <label for="year" class="text-white mb-3" style="font-size:25px;">Year</label>
-          <select class="form-control clear-select" name="year" required>
+          <select class="form-control clear-select text-secondary" name="year" required>
             <option value="" <% if(!year) { %>selected<% } %> disabled>Choose</option>
             <% yearArray.forEach((y) => { %>
               <option value="<%= y %>" <% if(year === y) { %>selected <% } %>><%= y %></option>
