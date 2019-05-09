@@ -96,9 +96,17 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 				return res.redirect("/employee/expenses/viewBy")
 			}
 
-			const expenses = await Expense.find({ 
-				$expr: expression
-			}).sort({ createdAt: 1})
+			let expenses = await Expense.aggregate([
+				{
+					$match: {
+						$expr: expression
+					},
+				},{
+					$sort: {
+						createdAt: -1
+					}
+				}
+			]).allowDiskUse(true).exec()
 			
 			res.render("./admin/dashboard", {
 				pageTitle: title.adminDashboard,
@@ -115,14 +123,22 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 			let month = moment().month() + 1
 			let year = moment().year()
 			let viewBy = "month"
-			let expenses = await Expense.find({
-				$expr: {
-					$and: [
-						{$eq: [{$year: "$createdAt"}, year]},
-						{$eq: [{$month: "$createdAt"}, month]}
-					]
+			let expenses = await Expense.aggregate([
+				{
+					$match: {
+						$expr: {
+							$and: [
+								{$eq: [{$year: "$createdAt"}, year]},
+								{$eq: [{$month: "$createdAt"}, month]}
+							]
+						}
+					},
+				},{
+					$sort: {
+						createdAt: -1
+					}
 				}
-			}).sort({ createdAt: 1})
+			]).allowDiskUse(true).exec()
 
 			res.render("./admin/dashboard", {
 				pageTitle: title.adminDashboard,
