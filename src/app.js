@@ -15,7 +15,7 @@ const app = express()
 //set the development environment port
 const port = process.env.PORT || 3000
 
-// app.enable('trust proxy');
+app.use(helmet())
 
 if(process.env.NODE_ENV == "production")
 {
@@ -29,7 +29,6 @@ if(process.env.NODE_ENV == "production")
 
 app.use(express.static(__dirname + "/../public"));
 
-app.use(helmet())
 
 app.use(express.urlencoded({ extended: true}))
 
@@ -46,10 +45,6 @@ app.use(session({
     mongooseConnection: db
   })
 }));
-
-app.use((req, res, next) => {
-	next()
-})
 
 //set the view engine to ejs
 app.set("view engine", "ejs")
