@@ -124,7 +124,6 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 			let year = moment().year()
 			let viewBy = "month"
 
-			res.end("success")
 			let expenses = await Expense.aggregate([
 				{
 					$match: {
@@ -141,6 +140,7 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 					}
 				}
 			])
+			res.end(expenses)
 			res.render("./admin/dashboard", {
 				pageTitle: title.adminDashboard,
 				viewBy,
