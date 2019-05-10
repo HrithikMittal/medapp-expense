@@ -123,16 +123,25 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 			let month = moment().month() + 1
 			let year = moment().year()
 			let viewBy = "month"
-
-			let expenses = await Expense.find({
-				$expr: {
-					$and: [
-						{$eq: [{$year: "$createdAt"}, year]},
-						{$eq: [{$month: "$createdAt"}, month]}
-					]
+			let expenses = await Expense.aggregate([
+				{
+					$match: {
+						$expr: {
+							$and: [
+								{$eq: [{$year: "$createdAt"}, year]},
+								{$eq: [{$month: "$createdAt"}, month]}
+							]
+						}
+					},
+				},{
+					$sort: {
+						createdAt: -1
+					}
+				},
+				{
+					$limit: 10
 				}
-			})
-			res.end(expenses)
+			]).allowDiskUse(true).exec()
 			res.render("./admin/dashboard", {
 				pageTitle: title.adminDashboard,
 				viewBy,
@@ -145,8 +154,6 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 				decode
 			})
 		}
-
-		res.send("Not indulging!")
 	} catch(e) {
 		res.status(400).send(`<h3>Something went wrong!</h3><p>${e}</p>`)
 	}
