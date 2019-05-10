@@ -15,8 +15,7 @@ const app = express()
 //set the development environment port
 const port = process.env.PORT || 3000
 
-// app.enable('trust proxy');
-// app.use(helmet())
+app.enable('trust proxy');
 
 if(process.env.NODE_ENV == "production")
 {
@@ -30,6 +29,7 @@ if(process.env.NODE_ENV == "production")
 
 app.use(express.static(__dirname + "/../public"));
 
+app.use(helmet())
 
 app.use(express.urlencoded({ extended: true}))
 
@@ -40,12 +40,16 @@ app.use(session({
   saveUninitialized: true,
   cookie: {
     secure: true,
-  	expires: new Date(Date.now() + 60 * 60 * 3000)
+    expires: new Date(Date.now() + 60 * 60 * 1000)
   },
   store: new MongoStore({
     mongooseConnection: db
   })
 }));
+
+app.use((req, res, next) => {
+  next()
+})
 
 //set the view engine to ejs
 app.set("view engine", "ejs")
@@ -62,14 +66,14 @@ app.use(function (req, res, next) {
 //setup global errors variable
 app.locals.errors = null;
 
-app.use("/employee", employeeRoute)
-app.use("/medapp-expense-admin", adminRoute)
-
 app.get("/", (req, res) => {
   res.render("index.ejs", {
     pageTitle: "Home | Expense App"
   })
 })
+
+app.use("/employee", employeeRoute)
+app.use("/medapp-expense-admin", adminRoute)
 
 //add the manifest
 app.get("/manifest.json", function(req, res){
@@ -97,5 +101,5 @@ app.get("/loader.js", function(req, res){
 });
 
 app.listen(port, (req, res) => {
-	console.log(`Server started at port ${port}..`)
+  console.log(`Server started at port ${port}..`)
 })
