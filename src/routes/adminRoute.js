@@ -145,6 +145,8 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 				decode
 			})
 		}
+
+		res.send("Not indulging!")
 	} catch(e) {
 		res.status(400).send(`<h3>Something went wrong!</h3><p>${e}</p>`)
 	}
