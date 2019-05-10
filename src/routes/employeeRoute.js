@@ -439,7 +439,8 @@ router.post("/expenses/add", isEmployeeLoggedIn, uploadBill.single("billImage"),
 					mode,
 					from,
 					to,
-					detail
+					detail,
+					addExpense: true
 				})
 			}
 
@@ -456,7 +457,8 @@ router.post("/expenses/add", isEmployeeLoggedIn, uploadBill.single("billImage"),
 					mode,
 					from,
 					to,
-					detail
+					detail,
+					addExpense: true
 				})
 			}
 

@@ -138,7 +138,7 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 						createdAt: -1
 					}
 				}
-			]).allowDiskUse(true).exec()
+			])
 
 			res.render("./admin/dashboard", {
 				pageTitle: title.adminDashboard,
