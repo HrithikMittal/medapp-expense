@@ -62,14 +62,14 @@ app.use(function (req, res, next) {
 //setup global errors variable
 app.locals.errors = null;
 
+app.use("/employee", employeeRoute)
+app.use("/medapp-expense-admin", adminRoute)
+
 app.get("/", (req, res) => {
   res.render("index.ejs", {
     pageTitle: "Home | Expense App"
   })
 })
-
-app.use("/employee", employeeRoute)
-app.use("/medapp-expense-admin", adminRoute)
 
 //add the manifest
 app.get("/manifest.json", function(req, res){
