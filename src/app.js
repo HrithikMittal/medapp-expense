@@ -15,7 +15,7 @@ const app = express()
 //set the development environment port
 const port = process.env.PORT || 3000
 
-app.enable('trust proxy');
+// app.enable('trust proxy');
 
 if(process.env.NODE_ENV == "production")
 {

@@ -52,7 +52,6 @@ router.post("/login", isAdminLoggedOut, [
 			}
 
 			req.session.admin = admin
-
 			res.redirect("/medapp-expense-admin/dashboard")
 		} catch(e) {
 			res.status(400).send("Unable to login!\n" + e)
@@ -72,7 +71,6 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 
 		for(let y = moment().year(); y >= 2010; y--)
 			yearArray.push(String(y))
-
 		if(["month", "year"].includes(req.query.option)) {
 
 			let viewBy = req.query.option
@@ -106,7 +104,7 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 						createdAt: -1
 					}
 				}
-			]).allowDiskUse(true).exec()
+			]).exec()
 			
 			res.render("./admin/dashboard", {
 				pageTitle: title.adminDashboard,
@@ -138,7 +136,7 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 						createdAt: -1
 					}
 				}
-			])
+			]).exec()
 
 			res.render("./admin/dashboard", {
 				pageTitle: title.adminDashboard,
