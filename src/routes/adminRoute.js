@@ -123,6 +123,8 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 			let month = moment().month() + 1
 			let year = moment().year()
 			let viewBy = "month"
+
+			res.end("success")
 			let expenses = await Expense.aggregate([
 				{
 					$match: {
@@ -138,8 +140,7 @@ router.get("/dashboard", isAdminLoggedIn, async (req, res) => {
 						createdAt: -1
 					}
 				}
-			]).allowDiskUse(true).exec()
-			console.log("Hello")
+			])
 			res.render("./admin/dashboard", {
 				pageTitle: title.adminDashboard,
 				viewBy,
